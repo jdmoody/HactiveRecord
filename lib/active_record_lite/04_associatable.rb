@@ -20,7 +20,10 @@ end
 
 class BelongsToOptions < AssocOptions
   def initialize(name, options = {})
-    # ...
+    if options.empty?
+      self.define_method("foreign_key") { "#{name}_id".to_sym }
+    else
+    end
   end
 end
 
@@ -46,5 +49,5 @@ module Associatable
 end
 
 class SQLObject
-  # Mixin Associatable here...
+  extend Associatable
 end
