@@ -4,12 +4,12 @@ require 'active_support/inflector'
 
 class MassObject
   def self.parse_all(results)
-    objs = []
-    results.each do |result|
-      obj = self.new(result)  
-      objs << obj
+    # objs = []
+    results.map do |result|
+      self.new(result)  
+      # objs << obj
     end
-    objs
+    # objs
   end
 end
 
@@ -22,7 +22,7 @@ class SQLObject < MassObject
       FROM #{table_name}
     SQL
     .first
-    .map { |attr_name| attr_name.to_sym }
+    .map(&:to_sym)
 
     columns.each do |column|
       define_method(column) { attributes[column] }
@@ -75,7 +75,6 @@ class SQLObject < MassObject
   end
 
   def initialize(params = {})
-
     params.each do |attr_name, value|
       attr_sym = attr_name.to_sym
       
