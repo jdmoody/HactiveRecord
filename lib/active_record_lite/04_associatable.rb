@@ -70,6 +70,8 @@ module Associatable
       bt_model.where(bt_options.primary_key => send(bt_foreign_key)).first
     end
     
+    self.assoc_options[name] = bt_options
+    
   end
 
   def has_many(name, options = {})
@@ -89,7 +91,8 @@ module Associatable
   end
 
   def assoc_options
-    # Wait to implement this in Phase V. Modify `belongs_to`, too.
+    @assoc_options ||= {}
+    @assoc_options
   end
 end
 
